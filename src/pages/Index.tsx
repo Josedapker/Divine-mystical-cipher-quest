@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CipherExperiment } from '../components/CipherExperiment';
+import { CipherGuide } from '../components/CipherGuide';
 
 const Index = () => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
 
   if (gameStarted) {
     return <CipherExperiment onBack={() => setGameStarted(false)} />;
@@ -82,7 +84,7 @@ const Index = () => {
           </motion.button>
           
           <motion.button
-            onClick={() => setGameStarted(true)}
+            onClick={() => setGuideOpen(true)}
             className="px-6 py-2 bg-transparent hover:bg-white/5 text-white/70 rounded-full 
                      border border-white/10 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
@@ -92,6 +94,8 @@ const Index = () => {
           </motion.button>
         </motion.div>
       </motion.div>
+
+      <CipherGuide open={guideOpen} onOpenChange={setGuideOpen} />
     </div>
   );
 };
