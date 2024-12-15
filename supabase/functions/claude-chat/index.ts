@@ -23,6 +23,10 @@ serve(async (req) => {
       throw new Error('ANTHROPIC_API_KEY is not set');
     }
 
+    // Extract current level and hint from system message if present
+    const systemMessage = messages.find(m => m.role === 'system')?.content || '';
+    console.log('System context:', systemMessage);
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -37,9 +41,32 @@ serve(async (req) => {
           role: msg.role === 'assistant' ? 'assistant' : 'user',
           content: msg.content
         })),
-        system: `You are a mystical guide helping users solve cipher puzzles in a Secret Santa game. 
-                Be encouraging and give subtle hints rather than direct answers.
-                Keep your responses concise and magical in tone.`
+        system: `You are a mystical guide helping users solve cipher puzzles in a Secret Santa game. Your role is to provide progressive hints that help users think through the puzzle without giving away the answer directly.
+
+        For number-based ciphers (Level 1):
+        - Guide users to look for patterns in the symbols
+        - Hint at counting or sequence relationships
+        - Suggest looking at how symbols might represent digits
+
+        For word-based ciphers (Level 2):
+        - Help users identify word patterns
+        - Point out symbol groupings that might form words
+        - Remind users about the riddle context
+
+        For the final cipher (Level 3):
+        - Connect hints to blockchain/crypto themes
+        - Guide users to think about relevant blockchain terms
+        - Help users see patterns in symbol groups
+
+        Current puzzle context:
+        ${systemMessage}
+
+        Remember:
+        - Stay in character as a mystical guide
+        - Give hints that build on each other
+        - If users are stuck, provide slightly more direct hints
+        - Celebrate their progress when they're on the right track
+        - Keep responses concise and focused on the puzzle at hand`
       })
     });
 
