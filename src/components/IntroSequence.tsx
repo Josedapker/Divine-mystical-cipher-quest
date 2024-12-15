@@ -10,8 +10,8 @@ interface IntroSequenceProps {
 
 export const introMessages = [
   {
-    title: "Divine Journey - Shinjuku",
-    message: "Navigate through the neon-lit streets of our spiritual center. Decode the coordinates that led to where it all began."
+    title: "The Sacred Tokyo Journey",
+    message: "Navigate through the neon-lit streets of our spiritual center in Japan. Decode the coordinates that led to where it all began."
   },
   {
     title: "The Car Enthusiast's Quest",

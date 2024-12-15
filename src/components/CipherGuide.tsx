@@ -36,9 +36,9 @@ const CipherGuide: React.FC<CipherGuideProps> = ({ open, onOpenChange }) => {
               <h3 className="text-lg font-serif mb-2">The Three Sacred Trials</h3>
               <div className="space-y-4">
                 <div className="bg-white/5 p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">1. Divine Journey - Shinjuku</h4>
+                  <h4 className="font-medium mb-2">1. The Sacred Tokyo Journey</h4>
                   <p className="text-sm text-muted-foreground">
-                    Navigate through the neon-lit streets of our spiritual center.
+                    Navigate through the neon-lit streets of our spiritual center in Japan.
                     Decode the coordinates that led to where it all began.
                   </p>
                 </div>
