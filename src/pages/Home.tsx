@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CipherExperiment } from '../components/CipherExperiment';
 import CipherGuide from '../components/CipherGuide';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user came from intro sequence
+    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+    if (!hasSeenIntro) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden">

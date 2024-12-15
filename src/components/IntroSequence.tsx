@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,10 +29,16 @@ const IntroSequence = () => {
   const [introStep, setIntroStep] = useState(0);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Reset hasSeenIntro when component mounts
+    sessionStorage.removeItem('hasSeenIntro');
+  }, []);
+
   const handleNextMessage = () => {
     if (introStep < introMessages.length) {
       setIntroStep(prev => prev + 1);
     } else {
+      sessionStorage.setItem('hasSeenIntro', 'true');
       navigate('/home');
     }
   };
