@@ -1,5 +1,4 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -18,7 +17,7 @@ serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': Deno.env.get('ANTHROPIC_API_KEY') || '',
+        'X-API-Key': Deno.env.get('ANTHROPIC_API_KEY') || '',
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
@@ -41,6 +40,7 @@ serve(async (req) => {
       }
     )
   } catch (error) {
+    console.error('Error in claude-chat function:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       { 
