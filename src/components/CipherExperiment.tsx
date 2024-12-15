@@ -60,10 +60,6 @@ const GAME_LEVELS = [
   }
 ];
 
-interface CipherExperimentProps {
-  onBack: () => void;
-}
-
 export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) => {
   const [currentLevel, setCurrentLevel] = useState(1);
   const [inputText, setInputText] = useState('');

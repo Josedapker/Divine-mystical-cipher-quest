@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { ScrollArea } from './ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -33,16 +34,8 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.ANTHROPIC_API_KEY || '',
-          'anthropic-version': '2023-06-01'
-        },
-        body: JSON.stringify({
-          model: 'claude-3-opus-20240229',
-          max_tokens: 1024,
+      const { data: { response }, error } = await supabase.functions.invoke('claude-chat', {
+        body: {
           messages: [
             {
               role: 'system',
@@ -54,17 +47,12 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
             ...messages,
             { role: 'user', content: userMessage }
           ]
-        })
+        }
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to get response from Claude');
-      }
+      if (error) throw error;
 
-      const data = await response.json();
-      const assistantMessage = data.content[0].text;
-
-      setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
       toast({
         title: "Message received",
         description: "The Divine Guide has responded to your query.",
