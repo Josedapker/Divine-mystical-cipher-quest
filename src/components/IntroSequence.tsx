@@ -3,36 +3,13 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 
 interface IntroSequenceProps {
-  introStep: number;
-  onNextMessage: () => void;
+  introStep?: number;
+  onNextMessage?: () => void;
 }
 
-const introMessages = [
-  {
-    title: "The Divine Secret Santa",
-    message: "Welcome to a mystical holiday quest where DIVINE members unite to unlock a special treasure for one of our own..."
-  },
-  {
-    title: "A Gift Most Sacred",
-    message: "The Secret Santa's treasure lies hidden behind three mystical ciphers, waiting to bring joy to our chosen DIVINE member."
-  },
-  {
-    title: "Our Collective Mission",
-    message: "Together, we must decode these enchanted messages to reveal the key fragments. Only through our combined wisdom will the gift be unveiled."
-  },
-  {
-    title: "The Oracle's Blessing",
-    message: "I shall guide our fellowship through this festive challenge. Seek my hints if needed, though each one slightly dims the holiday magic."
-  },
-  {
-    title: "Unite for Joy",
-    message: "Are you ready to join your fellow DIVINE members in this magical Secret Santa quest? Let's bring holiday wonder to our chosen one..."
-  }
-];
-
 export const IntroSequence: React.FC<IntroSequenceProps> = ({
-  introStep,
-  onNextMessage,
+  introStep = 0,
+  onNextMessage = () => {},
 }) => {
   return (
     <motion.div
@@ -83,4 +60,25 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
   );
 };
 
-export { introMessages };
+export const introMessages = [
+  {
+    title: "The Divine Secret Santa",
+    message: "Welcome to a mystical holiday quest where DIVINE members unite to unlock a special treasure for one of our own..."
+  },
+  {
+    title: "A Gift Most Sacred",
+    message: "The Secret Santa's treasure lies hidden behind three mystical ciphers, waiting to bring joy to our chosen DIVINE member."
+  },
+  {
+    title: "Our Collective Mission",
+    message: "Together, we must decode these enchanted messages to reveal the key fragments. Only through our combined wisdom will the gift be unveiled."
+  },
+  {
+    title: "The Oracle's Blessing",
+    message: "I shall guide our fellowship through this festive challenge. Seek my hints if needed, though each one slightly dims the holiday magic."
+  },
+  {
+    title: "Unite for Joy",
+    message: "Are you ready to join your fellow DIVINE members in this magical Secret Santa quest? Let's bring holiday wonder to our chosen one..."
+  }
+];
