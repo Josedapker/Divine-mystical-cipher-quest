@@ -16,7 +16,7 @@ Unity in urban adventure`,
       "Where Divine found its Tokyo soul",
       "The place that changed perspectives"
     ],
-    reward: "35.6895° N, 139.6917° E"
+    reward: "4vHYpuQUy9VWnB7p"
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ Sanctuary of speed found`,
       "Famous orange-signed parts store in Japan",
       "Where JDM dreams come true"
     ],
-    reward: "The Temple of Speed"
+    reward: "2kMzXwL8nR5jKcVt"
   },
   {
     id: 3,
@@ -52,6 +52,6 @@ Destiny written in azure skies`,
       "Where island hopping dreams came true",
       "Five kayaks tell a story"
     ],
-    reward: "11.1800° N, 119.3830° E"
+    reward: "9gTqHdA3fE6mPyNs"
   }
 ];
