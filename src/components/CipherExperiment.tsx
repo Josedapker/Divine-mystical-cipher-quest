@@ -6,7 +6,6 @@ import { CipherLevel } from './CipherLevel';
 import { AICipherAssistant } from './AICipherAssistant';
 import { KeyCombiner } from './KeyCombiner';
 import CipherGuide from './CipherGuide';
-import { IntroSequence } from './IntroSequence';
 import { GAME_LEVELS } from './CipherConstants';
 import { checkSolution, showHint, fetchWalletBalance } from './GameLogic';
 
@@ -20,17 +19,7 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
   const [message, setMessage] = useState('');
   const [revealedKeys, setRevealedKeys] = useState<string[]>([]);
   const [solvedLevels, setSolvedLevels] = useState<number[]>([]);
-  const [introStep, setIntroStep] = useState(0);
-  const [showGame, setShowGame] = useState(false);
   const [showRules, setShowRules] = useState(false);
-
-  const handleNextMessage = () => {
-    if (introStep < 5) {
-      setIntroStep(prev => prev + 1);
-    } else {
-      setShowGame(true);
-    }
-  };
 
   const handleCheckSolution = () => {
     checkSolution(
@@ -72,56 +61,47 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
         </Button>
       </div>
 
-      <AnimatePresence mode="wait">
-        {!showGame ? (
-          <IntroSequence
-            introStep={introStep}
-            onNextMessage={handleNextMessage}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="max-w-2xl mx-auto space-y-8"
+      >
+        <AICipherAssistant
+          currentLevel={currentLevel}
+          currentHint={message}
+        />
+
+        {GAME_LEVELS.map((level, index) => (
+          <CipherLevel
+            key={level.id}
+            level={level}
+            isCurrentLevel={level.id === currentLevel}
+            isSolved={solvedLevels.includes(level.id)}
+            isLocked={level.id > currentLevel}
+            inputText={level.id === currentLevel ? inputText : ''}
+            message={message}
+            onInputChange={setInputText}
+            onCheckSolution={handleCheckSolution}
+            onShowHint={handleShowHint}
+            revealedKey={revealedKeys[index]}
           />
-        ) : (
+        ))}
+
+        <KeyCombiner
+          revealedKeys={revealedKeys}
+          isComplete={isAllTrialsComplete}
+        />
+
+        {message && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="max-w-2xl mx-auto space-y-8"
+            className="p-4 rounded bg-white/5 text-center"
           >
-            <AICipherAssistant
-              currentLevel={currentLevel}
-              currentHint={message}
-            />
-
-            {GAME_LEVELS.map((level, index) => (
-              <CipherLevel
-                key={level.id}
-                level={level}
-                isCurrentLevel={level.id === currentLevel}
-                isSolved={solvedLevels.includes(level.id)}
-                isLocked={level.id > currentLevel}
-                inputText={level.id === currentLevel ? inputText : ''}
-                message={message}
-                onInputChange={setInputText}
-                onCheckSolution={handleCheckSolution}
-                onShowHint={handleShowHint}
-                revealedKey={revealedKeys[index]}
-              />
-            ))}
-
-            <KeyCombiner
-              revealedKeys={revealedKeys}
-              isComplete={isAllTrialsComplete}
-            />
-
-            {message && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="p-4 rounded bg-white/5 text-center"
-              >
-                {message}
-              </motion.div>
-            )}
+            {message}
           </motion.div>
         )}
-      </AnimatePresence>
+      </motion.div>
 
       <CipherGuide
         open={showRules}
