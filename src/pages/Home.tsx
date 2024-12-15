@@ -10,7 +10,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Only redirect to intro if coming to home page directly (not from intro)
     const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       navigate('/');
