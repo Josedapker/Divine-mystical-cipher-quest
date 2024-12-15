@@ -1,9 +1,8 @@
 export const GAME_LEVELS = [
   {
     id: 1,
-    title: "Divine Journey",
-    description: "Decode the coordinates of our spiritual center where Divine's Tokyo adventure began.",
-    challenge: `Seeking neon dreams: 35.6895° N
+    hint: "Decode the coordinates of our spiritual center where Divine's Tokyo adventure began.",
+    encodedMessage: `Seeking neon dreams: 35.6895° N
 Harmony found in chaos
 Into the night we venture
 Nightly feasts await: 139.6917° E
@@ -21,9 +20,8 @@ Unity in urban adventure`,
   },
   {
     id: 2,
-    title: "The Car Enthusiast's Quest",
-    description: "Uncover the sacred grounds where JDM dreams come true.",
-    challenge: `Automotive dreams unfold here
+    hint: "Uncover the sacred grounds where JDM dreams come true.",
+    encodedMessage: `Automotive dreams unfold here
 Under neon signs we browse
 Through aisles of JDM parts
 Overseas treasures abound
@@ -41,9 +39,8 @@ Sanctuary of speed found`,
   },
   {
     id: 3,
-    title: "Island Code",
-    description: "Navigate to paradise where five kayaks explored azure waters.",
-    challenge: `First light breaks: 11.1800° N
+    hint: "Navigate to paradise where five kayaks explored azure waters.",
+    encodedMessage: `First light breaks: 11.1800° N
 Remember five kayaks against tide
 Islands whisper secrets: 119.3830° E
 Each wave marks time's flow
