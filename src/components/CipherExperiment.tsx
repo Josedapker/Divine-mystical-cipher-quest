@@ -25,7 +25,7 @@ const GAME_LEVELS = [
     hint: "First test: Decode this message to prove your worth",
     encodedMessage: "⎊⎈⎇⌬⌭⌮⌯⌰⌱⎔", // "1234567890"
     solution: "1234567890",
-    reward: "First part of the key: 5KF",
+    reward: "First part of the key: jqTnERPoRvZR",
     hints: [
       "Look at the pattern of symbols carefully",
       "Each symbol represents a single digit",
@@ -37,7 +37,7 @@ const GAME_LEVELS = [
     hint: "Second test: What has keys but no locks, space but no room, and you can enter but not go in?",
     encodedMessage: "◐△❈◇◔◈⚇□", // "KEYBOARD"
     solution: "KEYBOARD",
-    reward: "Second part of the key: 9HJ",
+    reward: "Second part of the key: 5T6BiPF1QyChub5fh3U7g8uWeDMENabtvuYDje3hAR3xpaCsTpNQjX6hSYUNM",
     hints: [
       "It's something you use every day",
       "You're using it right now to solve this puzzle",
@@ -49,7 +49,7 @@ const GAME_LEVELS = [
     hint: "Final test: Decode this wallet address",
     encodedMessage: "⚆◔◑◈◓◈", // "SOLANA"
     solution: "SOLANA",
-    reward: "Final part of the key: 2MP",
+    reward: "Final part of the key: 13mZ1f76VcanJm",
     hints: [
       "It's the name of a blockchain",
       "This treasure hunt runs on it",
@@ -67,9 +67,6 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
   const [inputText, setInputText] = useState('');
   const [message, setMessage] = useState('');
   const [revealedKeys, setRevealedKeys] = useState<string[]>([]);
-  const [walletBalance, setWalletBalance] = useState<number | null>(null);
-  const [hintsUsed, setHintsUsed] = useState<{ [key: number]: number }>({});
-  const [rewardMultiplier, setRewardMultiplier] = useState(1.0);
   const [solvedLevels, setSolvedLevels] = useState<number[]>([]);
   const [introStep, setIntroStep] = useState(0);
   const [showGame, setShowGame] = useState(false);
@@ -118,7 +115,7 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
           setMessage('');
         }, 2000);
       } else {
-        setMessage('Congratulations! You have completed all levels! The complete key is: ' + 
+        setMessage('Congratulations! You have completed all trials! The complete key is: ' + 
           [...revealedKeys, level.reward].join(' '));
       }
     } else {
@@ -128,15 +125,11 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
 
   const showHint = () => {
     const level = GAME_LEVELS[currentLevel - 1];
-    const currentHintsUsed = hintsUsed[currentLevel] || 0;
+    const currentHintsUsed = solvedLevels.includes(currentLevel) ? 0 : 
+      (level.hints.findIndex(hint => message === `Hint: ${hint}`) + 1) || 0;
     
     if (currentHintsUsed < level.hints.length) {
-      setHintsUsed({
-        ...hintsUsed,
-        [currentLevel]: currentHintsUsed + 1
-      });
-      setRewardMultiplier(Math.max(0.25, rewardMultiplier - 0.25));
-      setMessage(`Hint ${currentHintsUsed + 1}: ${level.hints[currentHintsUsed]}`);
+      setMessage(`Hint: ${level.hints[currentHintsUsed]}`);
     } else {
       setMessage("No more hints available for this level!");
     }
@@ -146,9 +139,9 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
     const fetchWalletBalance = async () => {
       try {
         const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
-        const publicKey = new PublicKey('Your-Public-Key-Here');
+        const publicKey = new PublicKey('jqTnERPoRvZR5T6BiPF1QyChub5fh3U7g8uWeDMENabtvuYDje3hAR3xpaCsTpNQjX6hSYUNM');
         const balance = await connection.getBalance(publicKey);
-        setWalletBalance(balance / LAMPORTS_PER_SOL);
+        console.log('Wallet balance:', balance / LAMPORTS_PER_SOL);
       } catch (error) {
         console.error('Error fetching wallet balance:', error);
       }
@@ -216,7 +209,7 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
             key="game"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="max-w-2xl mx-auto"
+            className="max-w-2xl mx-auto space-y-8"
           >
             <Button 
               onClick={onBack}
@@ -226,91 +219,92 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
               ← Back to Home
             </Button>
 
-            {/* Show Collected Key Fragments */}
-            {solvedLevels.length > 0 && (
-              <motion.div 
+            {/* Display all levels in sequence */}
+            {GAME_LEVELS.map((level, index) => {
+              const isCurrentLevel = level.id === currentLevel;
+              const isSolved = solvedLevels.includes(level.id);
+              const isLocked = level.id > currentLevel;
+
+              return (
+                <motion.div
+                  key={level.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`p-6 rounded-lg border ${
+                    isCurrentLevel ? 'bg-white/10 border-white/20' :
+                    isSolved ? 'bg-white/5 border-white/10' :
+                    'bg-white/5 border-white/5 opacity-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-serif">Trial {level.id}</h3>
+                    {isSolved && (
+                      <span className="text-green-400 text-sm">Completed</span>
+                    )}
+                  </div>
+
+                  {!isLocked && (
+                    <>
+                      <p className="text-white/80 mb-4">{level.hint}</p>
+                      <div className="font-mono text-lg mb-4 bg-white/5 p-3 rounded text-center">
+                        {level.encodedMessage}
+                      </div>
+
+                      {isCurrentLevel && (
+                        <div className="space-y-4">
+                          <input
+                            type="text"
+                            value={inputText}
+                            onChange={(e) => setInputText(e.target.value)}
+                            className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-white/20"
+                            placeholder="Enter your solution..."
+                          />
+                          <div className="flex gap-3">
+                            <button
+                              onClick={checkSolution}
+                              className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded transition-colors"
+                            >
+                              Submit Answer
+                            </button>
+                            <button
+                              onClick={showHint}
+                              className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded transition-colors"
+                            >
+                              Need a Hint?
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {isSolved && (
+                        <div className="mt-4 p-3 bg-white/10 rounded">
+                          <p className="text-green-400 mb-2">Reward Unlocked:</p>
+                          <code className="text-sm break-all">
+                            {revealedKeys[level.id - 1]}
+                          </code>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {isLocked && (
+                    <div className="text-center py-8 text-white/40">
+                      <p>Complete previous trials to unlock</p>
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
+
+            {message && (
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="mb-6 p-4 bg-white/5 border border-white/10 rounded-lg"
+                className="p-4 rounded bg-white/5 text-center"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-base font-serif">Secret Santa Key Collection</h2>
-                  <span className="text-xs text-white/50">{solvedLevels.length}/3 Fragments Found</span>
-                </div>
-                <div className="space-y-2">
-                  {solvedLevels.map((level) => (
-                    <div key={level} className="flex items-center gap-3 p-2 bg-white/5 rounded">
-                      <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-sm">
-                        {level}
-                      </div>
-                      <code className="flex-1 text-sm font-mono text-white/90">
-                        {revealedKeys[level - 1]}
-                      </code>
-                    </div>
-                  ))}
-                </div>
-                {solvedLevels.length === GAME_LEVELS.length && (
-                  <div className="mt-4 p-3 bg-white/10 border border-white/20 rounded">
-                    <div className="text-sm font-serif mb-1">🎁 Secret Santa's Gift Unlocked!</div>
-                    <code className="block text-sm font-mono break-all text-white/90">
-                      {revealedKeys.join(' ')}
-                    </code>
-                  </div>
-                )}
+                {message}
               </motion.div>
             )}
-
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-serif">Holiday Cipher {currentLevel}</h2>
-                <div className="text-xs text-white/50">
-                  Holiday Spirit: {(rewardMultiplier * 100).toFixed(0)}%
-                </div>
-              </div>
-              
-              <div className="font-mono text-lg mb-4 bg-white/5 p-3 rounded text-center">
-                {GAME_LEVELS[currentLevel - 1].encodedMessage}
-              </div>
-              
-              <div className="flex items-center gap-3 mb-4">
-                <div className="text-sm text-white/60">
-                  Divine Hints: {hintsUsed[currentLevel] || 0}/3
-                </div>
-                <button
-                  onClick={showHint}
-                  className="px-3 py-1.5 text-sm bg-white/5 hover:bg-white/10 rounded transition-colors"
-                  disabled={(hintsUsed[currentLevel] || 0) >= 3}
-                >
-                  Seek Guidance
-                </button>
-              </div>
-
-              <div className="space-y-3">
-                <input
-                  type="text"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-white/20"
-                  placeholder="Decode the holiday message..."
-                />
-                <button
-                  onClick={checkSolution}
-                  className="w-full px-4 py-2 bg-white/10 hover:bg-white/20 rounded transition-colors"
-                >
-                  Reveal This Fragment
-                </button>
-              </div>
-
-              {message && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="mt-4 p-3 rounded text-sm bg-white/5"
-                >
-                  {message}
-                </motion.div>
-              )}
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
