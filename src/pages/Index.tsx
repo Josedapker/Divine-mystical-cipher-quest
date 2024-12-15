@@ -11,8 +11,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden">
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent pointer-events-none" />
+      {/* Mystical background pattern */}
+      <div className="absolute inset-0 mystical-bg" />
       
       <motion.div
         initial={{ opacity: 0 }}
@@ -35,7 +35,7 @@ const Index = () => {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-xl md:text-2xl text-white/60 font-light mb-8 tracking-[0.2em]"
         >
-          神聖な
+          Secret Santa Cipher
         </motion.h2>
 
         <motion.div
@@ -45,14 +45,14 @@ const Index = () => {
           className="max-w-xl mx-auto mb-12"
         >
           <h3 className="text-xl md:text-2xl text-white/80 font-light mb-6">
-            Agent Swarm Intelligence
+            A Mystical Holiday Quest
           </h3>
           <p className="text-white/60 text-sm md:text-base mb-8">
-            Automated Trading • Market Analysis • Prediction Markets
+            Decode • Discover • Delight
           </p>
           <div className="text-white/40 text-sm space-y-1">
-            <p>Divine Oracle • Divine Sentinel • Divine Prophet</p>
-            <p>Divine Trader • Divine Pulse</p>
+            <p>Divine Cipher • Divine Riddles • Divine Keys</p>
+            <p>Holiday Magic • Sacred Gifts</p>
           </div>
         </motion.div>
 
@@ -69,7 +69,7 @@ const Index = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Request Access
+            Begin Quest
           </motion.button>
           
           <motion.button
@@ -79,7 +79,7 @@ const Index = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            View Experiments
+            View Cipher Guide
           </motion.button>
         </motion.div>
       </motion.div>
