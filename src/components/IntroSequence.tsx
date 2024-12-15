@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface IntroSequenceProps {
   introStep?: number;
@@ -11,6 +12,14 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
   introStep = 0,
   onNextMessage = () => {},
 }) => {
+  const navigate = useNavigate();
+
+  const handleEnterRealm = () => {
+    // Store that user has seen intro to prevent redirect loop
+    sessionStorage.setItem('hasSeenIntro', 'true');
+    navigate('/home');
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -25,7 +34,7 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
           className="text-center"
         >
           <motion.button
-            onClick={onNextMessage}
+            onClick={handleEnterRealm}
             className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
           >
             Enter the Divine Realm
