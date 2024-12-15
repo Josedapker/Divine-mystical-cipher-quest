@@ -32,11 +32,20 @@ const Index = () => {
         <motion.h2
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="text-lg md:text-xl text-white/40 font-light mb-2 tracking-wider"
+        >
+          ディバイン
+        </motion.h2>
+
+        <motion.h3
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-xl md:text-2xl text-white/60 font-light mb-8 tracking-[0.2em]"
         >
           Secret Santa Cipher
-        </motion.h2>
+        </motion.h3>
 
         <motion.div
           initial={{ opacity: 0 }}
