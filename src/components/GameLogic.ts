@@ -15,7 +15,10 @@ export const checkSolution = (
   }
 ) => {
   const level = GAME_LEVELS[currentLevel - 1];
-  if (inputText.toUpperCase() === level.solution) {
+  const normalizedInput = inputText.toUpperCase().replace(/\s+/g, '');
+  const normalizedSolution = level.solution.toUpperCase().replace(/\s+/g, '');
+  
+  if (normalizedInput === normalizedSolution) {
     callbacks.setRevealedKeys([...revealedKeys, level.reward]);
     callbacks.setSolvedLevels([...solvedLevels, currentLevel]);
     callbacks.setMessage(`Correct! ${level.reward}`);
@@ -28,7 +31,7 @@ export const checkSolution = (
     } else {
       callbacks.setMessage(
         'Congratulations! You have completed all trials! The complete key is: ' +
-        [...revealedKeys, level.reward].join(' ')
+        [...revealedKeys, level.reward].join('')
       );
     }
   } else {
