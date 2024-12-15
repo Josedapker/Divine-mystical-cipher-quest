@@ -8,6 +8,29 @@ interface IntroSequenceProps {
   onNextMessage?: () => void;
 }
 
+export const introMessages = [
+  {
+    title: "Divine Journey - Shinjuku",
+    message: "Navigate through the neon-lit streets of our spiritual center. Decode the coordinates that led to where it all began."
+  },
+  {
+    title: "The Car Enthusiast's Quest",
+    message: "Uncover the sacred grounds where JDM dreams come true. Follow the trail of orange signs to automotive paradise."
+  },
+  {
+    title: "Island Paradise",
+    message: "Return to the crystal waters where five kayaks carved memories. Decode the coordinates to our island sanctuary."
+  },
+  {
+    title: "Memory Markers",
+    message: "Each cipher contains references that only Divine members would understand. Use our shared experiences to guide you through the challenges."
+  },
+  {
+    title: "Divine Guidance",
+    message: "If you find yourself lost in memories, hints are available to light your path. Each hint draws from our actual adventures and inside jokes."
+  }
+];
+
 export const IntroSequence: React.FC<IntroSequenceProps> = ({
   introStep: initialStep = 0,
   onNextMessage = () => {},
@@ -31,19 +54,21 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="max-w-2xl mx-auto mt-20"
+      className="min-h-screen bg-black text-white flex items-center justify-center px-4"
     >
       {currentStep === 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-center space-y-8"
         >
+          <h1 className="text-4xl md:text-6xl font-serif mb-4">Divine Group Chat Ciphers</h1>
+          <p className="text-xl text-white/80">A journey through our shared memories and adventures</p>
           <motion.button
             onClick={handleNextStep}
             className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
           >
-            Enter the Divine Realm
+            Begin the Sacred Journey
           </motion.button>
         </motion.div>
       )}
@@ -52,7 +77,7 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-6"
+          className="text-center space-y-6 max-w-2xl mx-auto"
         >
           <h2 className="text-2xl font-serif mb-2">
             {introMessages[currentStep - 1].title}
@@ -74,26 +99,3 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
     </motion.div>
   );
 };
-
-export const introMessages = [
-  {
-    title: "The Divine Secret Santa",
-    message: "Welcome to a mystical holiday quest where DIVINE members unite to unlock a special treasure for one of our own..."
-  },
-  {
-    title: "A Gift Most Sacred",
-    message: "The Secret Santa's treasure lies hidden behind three mystical ciphers, waiting to bring joy to our chosen DIVINE member."
-  },
-  {
-    title: "Our Collective Mission",
-    message: "Together, we must decode these enchanted messages to reveal the key fragments. Only through our combined wisdom will the gift be unveiled."
-  },
-  {
-    title: "The Oracle's Blessing",
-    message: "I shall guide our fellowship through this festive challenge. Seek my hints if needed, though each one slightly dims the holiday magic."
-  },
-  {
-    title: "Unite for Joy",
-    message: "Are you ready to join your fellow DIVINE members in this magical Secret Santa quest? Let's bring holiday wonder to our chosen one..."
-  }
-];
