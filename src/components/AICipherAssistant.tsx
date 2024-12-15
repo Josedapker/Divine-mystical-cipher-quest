@@ -34,7 +34,7 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
     setIsLoading(true);
 
     try {
-      const { data: { response }, error } = await supabase.functions.invoke('claude-chat', {
+      const { data, error } = await supabase.functions.invoke('claude-chat', {
         body: {
           messages: [
             {
@@ -44,15 +44,19 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
                 Current hint: ${currentHint}
                 Be encouraging and give subtle hints rather than direct answers.`
             },
-            ...messages,
+            ...messages.map(msg => ({
+              role: msg.role,
+              content: msg.content
+            })),
             { role: 'user', content: userMessage }
           ]
         }
       });
 
       if (error) throw error;
+      if (!data?.response) throw new Error('No response from Claude');
 
-      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
       toast({
         title: "Message received",
         description: "The Divine Guide has responded to your query.",

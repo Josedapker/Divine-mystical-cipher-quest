@@ -17,7 +17,7 @@ serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': Deno.env.get('ANTHROPIC_API_KEY') || '',
+        'x-api-key': Deno.env.get('ANTHROPIC_API_KEY') || '',
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
@@ -28,7 +28,7 @@ serve(async (req) => {
     })
 
     if (!response.ok) {
-      throw new Error('Failed to get response from Claude')
+      throw new Error(`Failed to get response from Claude: ${await response.text()}`)
     }
 
     const data = await response.json()
