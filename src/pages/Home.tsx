@@ -10,7 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user came from intro sequence
+    // Only redirect to intro if coming to home page directly (not from intro)
     const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
     if (!hasSeenIntro) {
       navigate('/');
