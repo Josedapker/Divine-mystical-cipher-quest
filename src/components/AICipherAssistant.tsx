@@ -4,6 +4,7 @@ import { Textarea } from './ui/textarea';
 import { ScrollArea } from './ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { Alert, AlertDescription } from './ui/alert';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -22,6 +23,7 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,6 +32,7 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
 
     const userMessage = input.trim();
     setInput('');
+    setError(null);
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
 
@@ -38,18 +41,12 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
       const { data, error } = await supabase.functions.invoke('claude-chat', {
         body: {
           messages: [
-            {
-              role: 'system',
-              content: `You are a mystical guide helping users solve cipher puzzles in a Secret Santa game. 
-                Current puzzle level: ${currentLevel}
-                Current hint: ${currentHint}
-                Be encouraging and give subtle hints rather than direct answers.
-                Keep your responses concise and magical in tone.`
+            { 
+              role: 'system', 
+              content: `Current puzzle level: ${currentLevel}
+                       Current hint: ${currentHint}`
             },
-            ...messages.map(msg => ({
-              role: msg.role,
-              content: msg.content
-            })),
+            ...messages,
             { role: 'user', content: userMessage }
           ]
         }
@@ -73,6 +70,7 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
       });
     } catch (error) {
       console.error('Error calling Claude:', error);
+      setError(error.message);
       toast({
         title: "Error",
         description: "Failed to get response from the Divine Guide. Please try again.",
@@ -106,12 +104,19 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
         )}
       </ScrollArea>
 
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
       <form onSubmit={handleSubmit} className="flex gap-2">
         <Textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask for guidance..."
           className="min-h-[80px] bg-white/5 border-white/10 text-white"
+          disabled={isLoading}
         />
         <Button 
           type="submit" 
