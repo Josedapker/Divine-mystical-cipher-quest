@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -9,15 +9,21 @@ interface IntroSequenceProps {
 }
 
 export const IntroSequence: React.FC<IntroSequenceProps> = ({
-  introStep = 0,
+  introStep: initialStep = 0,
   onNextMessage = () => {},
 }) => {
   const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState(initialStep);
 
-  const handleEnterRealm = () => {
-    // Store that user has seen intro to prevent redirect loop
-    sessionStorage.setItem('hasSeenIntro', 'true');
-    navigate('/home');
+  const handleNextStep = () => {
+    if (currentStep >= introMessages.length) {
+      // When we've shown all messages, navigate to home
+      sessionStorage.setItem('hasSeenIntro', 'true');
+      navigate('/home');
+    } else {
+      // Otherwise, move to next message
+      setCurrentStep(prev => prev + 1);
+    }
   };
 
   return (
@@ -27,14 +33,14 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
       exit={{ opacity: 0 }}
       className="max-w-2xl mx-auto mt-20"
     >
-      {introStep === 0 && (
+      {currentStep === 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
           <motion.button
-            onClick={handleEnterRealm}
+            onClick={handleNextStep}
             className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
           >
             Enter the Divine Realm
@@ -42,26 +48,26 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
         </motion.div>
       )}
 
-      {introStep > 0 && introStep <= introMessages.length && (
+      {currentStep > 0 && currentStep <= introMessages.length && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center space-y-6"
         >
           <h2 className="text-2xl font-serif mb-2">
-            {introMessages[introStep - 1].title}
+            {introMessages[currentStep - 1].title}
           </h2>
           <p className="text-lg text-white/80">
-            {introMessages[introStep - 1].message}
+            {introMessages[currentStep - 1].message}
           </p>
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            onClick={onNextMessage}
+            onClick={handleNextStep}
             className="mt-8 px-6 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90"
           >
-            {introStep === introMessages.length ? "Begin Quest" : "Continue"}
+            {currentStep === introMessages.length ? "Begin Quest" : "Continue"}
           </motion.button>
         </motion.div>
       )}
