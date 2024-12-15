@@ -33,29 +33,50 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
     setIsLoading(true);
 
     try {
-      // For now, we'll use a placeholder response
-      // In a production environment, this would call the API securely
-      const assistantMessage = `I see you're working on Trial ${currentLevel}. 
-        Let me help you think about this puzzle. 
-        Current hint: ${currentHint}
-        
-        What specific aspect would you like help with?`;
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.ANTHROPIC_API_KEY || '',
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-3-opus-20240229',
+          max_tokens: 1024,
+          messages: [
+            {
+              role: 'system',
+              content: `You are a mystical guide helping users solve cipher puzzles in a Secret Santa game. 
+                Current puzzle level: ${currentLevel}
+                Current hint: ${currentHint}
+                Be encouraging and give subtle hints rather than direct answers.`
+            },
+            ...messages,
+            { role: 'user', content: userMessage }
+          ]
+        })
+      });
 
-      setTimeout(() => {
-        setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
-        setIsLoading(false);
-      }, 1000);
+      if (!response.ok) {
+        throw new Error('Failed to get response from Claude');
+      }
 
+      const data = await response.json();
+      const assistantMessage = data.content[0].text;
+
+      setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
       toast({
-        title: "Message sent",
-        description: "The AI assistant will help you solve this puzzle.",
+        title: "Message received",
+        description: "The Divine Guide has responded to your query.",
       });
     } catch (error) {
+      console.error('Error calling Claude:', error);
       toast({
         title: "Error",
-        description: "Failed to get response from AI assistant",
+        description: "Failed to get response from the Divine Guide",
         variant: "destructive",
       });
+    } finally {
       setIsLoading(false);
     }
   };
