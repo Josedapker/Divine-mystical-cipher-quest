@@ -6,7 +6,7 @@ import { CipherLevel } from './CipherLevel';
 import { AICipherAssistant } from './AICipherAssistant';
 import { KeyCombiner } from './KeyCombiner';
 import CipherGuide from './CipherGuide';
-import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+import { HelpCircle } from 'lucide-react';
 
 const DIVINE_CIPHER_MAP: { [key: string]: string } = {
   'A': '◈', 'B': '◇', 'C': '○', 'D': '□', 'E': '△',
@@ -167,7 +167,7 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
           onClick={() => setShowRules(true)}
           className="rounded-full bg-white/10 hover:bg-white/20"
         >
-          <QuestionMarkCircledIcon className="h-5 w-5" />
+          <HelpCircle className="h-5 w-5" />
         </Button>
       </div>
 
