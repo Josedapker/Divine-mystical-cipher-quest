@@ -16,7 +16,7 @@ Unity in urban adventure`,
       "Where Divine found its Tokyo soul",
       "The place that changed perspectives"
     ],
-    reward: "4vHYpuQUy9VWnB7p"
+    reward: "jqTnERPoRvZR5T6BiPF1QyChub5fh3U7g8uWeDMENabtvuYDje3h"
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ Sanctuary of speed found`,
       "Famous orange-signed parts store in Japan",
       "Where JDM dreams come true"
     ],
-    reward: "2kMzXwL8nR5jKcVt"
+    reward: "AR3xpaCsTpNQjX6hSYUNM"
   },
   {
     id: 3,
@@ -52,6 +52,6 @@ Destiny written in azure skies`,
       "Where island hopping dreams came true",
       "Five kayaks tell a story"
     ],
-    reward: "9gTqHdA3fE6mPyNs"
+    reward: "13mZ1f76VcanJm"
   }
 ];
