@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Button } from './ui/button';
+
+interface IntroSequenceProps {
+  introStep: number;
+  onNextMessage: () => void;
+}
 
 const introMessages = [
   {
@@ -25,74 +30,57 @@ const introMessages = [
   }
 ];
 
-const IntroSequence = () => {
-  const [introStep, setIntroStep] = useState(0);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Reset hasSeenIntro when component mounts
-    sessionStorage.removeItem('hasSeenIntro');
-  }, []);
-
-  const handleNextMessage = () => {
-    if (introStep < introMessages.length) {
-      setIntroStep(prev => prev + 1);
-    } else {
-      sessionStorage.setItem('hasSeenIntro', 'true');
-      navigate('/home');
-    }
-  };
-
+export const IntroSequence: React.FC<IntroSequenceProps> = ({
+  introStep,
+  onNextMessage,
+}) => {
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden">
-      <div className="absolute inset-0 mystical-bg" />
-      
-      <AnimatePresence mode="wait">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="max-w-2xl mx-auto mt-20"
+    >
+      {introStep === 0 && (
         <motion.div
-          key="intro"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="max-w-2xl mx-auto mt-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center"
         >
-          {introStep === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center"
-            >
-              <motion.button
-                onClick={handleNextMessage}
-                className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
-              >
-                Enter the Divine Realm
-              </motion.button>
-            </motion.div>
-          )}
-
-          {introStep > 0 && introStep <= introMessages.length && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center space-y-6"
-            >
-              <h2 className="text-2xl font-serif mb-2">{introMessages[introStep - 1].title}</h2>
-              <p className="text-lg text-white/80">{introMessages[introStep - 1].message}</p>
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                onClick={handleNextMessage}
-                className="mt-8 px-6 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90"
-              >
-                {introStep === introMessages.length ? "Enter Home" : "Continue"}
-              </motion.button>
-            </motion.div>
-          )}
+          <motion.button
+            onClick={onNextMessage}
+            className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
+          >
+            Enter the Divine Realm
+          </motion.button>
         </motion.div>
-      </AnimatePresence>
-    </div>
+      )}
+
+      {introStep > 0 && introStep <= introMessages.length && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center space-y-6"
+        >
+          <h2 className="text-2xl font-serif mb-2">
+            {introMessages[introStep - 1].title}
+          </h2>
+          <p className="text-lg text-white/80">
+            {introMessages[introStep - 1].message}
+          </p>
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            onClick={onNextMessage}
+            className="mt-8 px-6 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90"
+          >
+            {introStep === introMessages.length ? "Begin Quest" : "Continue"}
+          </motion.button>
+        </motion.div>
+      )}
+    </motion.div>
   );
 };
 
-export default IntroSequence;
+export { introMessages };
