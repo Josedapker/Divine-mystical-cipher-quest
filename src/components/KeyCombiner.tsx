@@ -13,7 +13,13 @@ export const KeyCombiner: React.FC<KeyCombinerProps> = ({ revealedKeys, isComple
   const { toast } = useToast();
 
   const combineKeys = () => {
-    const combined = revealedKeys.join('');
+    // Extract just the key parts from the reward strings
+    const keyParts = revealedKeys.map(reward => {
+      const match = reward.match(/part of the key: (.+)$/);
+      return match ? match[1].trim() : '';
+    });
+    
+    const combined = keyParts.join('');
     setCombinedKey(combined);
     toast({
       title: "Keys Combined!",
