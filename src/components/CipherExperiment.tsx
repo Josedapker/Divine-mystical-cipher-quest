@@ -98,11 +98,10 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
   ];
 
   const handleNextMessage = () => {
-    if (introStep < introMessages.length - 1) {
+    if (introStep < introMessages.length) {
       setIntroStep(prev => prev + 1);
     } else {
-      // When we reach the end of intro messages, go back to home
-      onBack();
+      setShowGame(true);
     }
   };
 
@@ -197,7 +196,7 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
                   onClick={handleNextMessage}
                   className="mt-8 px-6 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90"
                 >
-                  {introStep === introMessages.length ? "Return to Home" : "Continue"}
+                  {introStep === introMessages.length ? "Begin Quest" : "Continue"}
                 </motion.button>
               </motion.div>
             )}
@@ -209,14 +208,6 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
             animate={{ opacity: 1 }}
             className="max-w-2xl mx-auto space-y-8"
           >
-            <Button 
-              onClick={onBack}
-              variant="ghost" 
-              className="mb-8 text-white/70 hover:text-white"
-            >
-              ← Back to Home
-            </Button>
-
             <AICipherAssistant 
               currentLevel={currentLevel}
               currentHint={message}
