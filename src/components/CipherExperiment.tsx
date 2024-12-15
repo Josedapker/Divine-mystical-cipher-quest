@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { CipherLevel } from './CipherLevel';
+import { AICipherAssistant } from './AICipherAssistant';
 
 const DIVINE_CIPHER_MAP: { [key: string]: string } = {
   'A': '◈', 'B': '◇', 'C': '○', 'D': '□', 'E': '△',
@@ -219,82 +221,26 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
               ← Back to Home
             </Button>
 
-            {/* Display all levels in sequence */}
-            {GAME_LEVELS.map((level, index) => {
-              const isCurrentLevel = level.id === currentLevel;
-              const isSolved = solvedLevels.includes(level.id);
-              const isLocked = level.id > currentLevel;
+            <AICipherAssistant 
+              currentLevel={currentLevel}
+              currentHint={message}
+            />
 
-              return (
-                <motion.div
-                  key={level.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`p-6 rounded-lg border ${
-                    isCurrentLevel ? 'bg-white/10 border-white/20' :
-                    isSolved ? 'bg-white/5 border-white/10' :
-                    'bg-white/5 border-white/5 opacity-50'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-serif">Trial {level.id}</h3>
-                    {isSolved && (
-                      <span className="text-green-400 text-sm">Completed</span>
-                    )}
-                  </div>
-
-                  {!isLocked && (
-                    <>
-                      <p className="text-white/80 mb-4">{level.hint}</p>
-                      <div className="font-mono text-lg mb-4 bg-white/5 p-3 rounded text-center">
-                        {level.encodedMessage}
-                      </div>
-
-                      {isCurrentLevel && (
-                        <div className="space-y-4">
-                          <input
-                            type="text"
-                            value={inputText}
-                            onChange={(e) => setInputText(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-white/20"
-                            placeholder="Enter your solution..."
-                          />
-                          <div className="flex gap-3">
-                            <button
-                              onClick={checkSolution}
-                              className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded transition-colors"
-                            >
-                              Submit Answer
-                            </button>
-                            <button
-                              onClick={showHint}
-                              className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded transition-colors"
-                            >
-                              Need a Hint?
-                            </button>
-                          </div>
-                        </div>
-                      )}
-
-                      {isSolved && (
-                        <div className="mt-4 p-3 bg-white/10 rounded">
-                          <p className="text-green-400 mb-2">Reward Unlocked:</p>
-                          <code className="text-sm break-all">
-                            {revealedKeys[level.id - 1]}
-                          </code>
-                        </div>
-                      )}
-                    </>
-                  )}
-
-                  {isLocked && (
-                    <div className="text-center py-8 text-white/40">
-                      <p>Complete previous trials to unlock</p>
-                    </div>
-                  )}
-                </motion.div>
-              );
-            })}
+            {GAME_LEVELS.map((level, index) => (
+              <CipherLevel
+                key={level.id}
+                level={level}
+                isCurrentLevel={level.id === currentLevel}
+                isSolved={solvedLevels.includes(level.id)}
+                isLocked={level.id > currentLevel}
+                inputText={level.id === currentLevel ? inputText : ''}
+                message={message}
+                onInputChange={setInputText}
+                onCheckSolution={checkSolution}
+                onShowHint={showHint}
+                revealedKey={revealedKeys[index]}
+              />
+            ))}
 
             {message && (
               <motion.div
