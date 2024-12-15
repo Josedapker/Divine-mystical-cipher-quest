@@ -166,13 +166,20 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
             exit={{ opacity: 0 }}
             className="max-w-2xl mx-auto mt-20"
           >
-            <Button 
-              onClick={onBack}
-              variant="ghost" 
-              className="mb-8 text-white/70 hover:text-white"
-            >
-              ← Back to Home
-            </Button>
+            {introStep === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center"
+              >
+                <motion.button
+                  onClick={handleNextMessage}
+                  className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
+                >
+                  Enter the Divine Realm
+                </motion.button>
+              </motion.div>
+            )}
 
             {introStep > 0 && introStep <= introMessages.length && (
               <motion.div
@@ -193,21 +200,6 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
                 </motion.button>
               </motion.div>
             )}
-
-            {introStep === 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center"
-              >
-                <motion.button
-                  onClick={handleNextMessage}
-                  className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
-                >
-                  Enter the Divine Realm
-                </motion.button>
-              </motion.div>
-            )}
           </motion.div>
         ) : (
           <motion.div
@@ -216,14 +208,6 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
             animate={{ opacity: 1 }}
             className="max-w-2xl mx-auto space-y-8"
           >
-            <Button 
-              onClick={onBack}
-              variant="ghost" 
-              className="mb-8 text-white/70 hover:text-white"
-            >
-              ← Back to Home
-            </Button>
-
             <AICipherAssistant 
               currentLevel={currentLevel}
               currentHint={message}
