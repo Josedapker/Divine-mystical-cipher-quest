@@ -18,8 +18,8 @@ const CipherGuide: React.FC<CipherGuideProps> = ({ open, onOpenChange }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl h-[80vh]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-serif">Divine Secret Santa Cipher Guide</DialogTitle>
-          <DialogDescription>A mystical journey to unlock the treasure</DialogDescription>
+          <DialogTitle className="text-2xl font-serif">Divine Group Chat Ciphers</DialogTitle>
+          <DialogDescription>A journey through our shared memories and adventures</DialogDescription>
         </DialogHeader>
         
         <ScrollArea className="h-full pr-4">
@@ -27,9 +27,8 @@ const CipherGuide: React.FC<CipherGuideProps> = ({ open, onOpenChange }) => {
             <section>
               <h3 className="text-lg font-serif mb-2">The Sacred Journey</h3>
               <p className="text-muted-foreground">
-                You are about to embark on a mystical quest to unlock a special Solana wallet
-                containing treasure for one chosen DIVINE member. Through three sacred trials,
-                you'll piece together the key fragments needed to access this gift.
+                Embark on a nostalgic quest through Divine's most memorable locations and adventures.
+                Each cipher contains references to real places and moments we've shared together.
               </p>
             </section>
 
@@ -37,59 +36,44 @@ const CipherGuide: React.FC<CipherGuideProps> = ({ open, onOpenChange }) => {
               <h3 className="text-lg font-serif mb-2">The Three Sacred Trials</h3>
               <div className="space-y-4">
                 <div className="bg-white/5 p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">1. The Numerical Trial</h4>
+                  <h4 className="font-medium mb-2">1. Divine Journey - Shinjuku</h4>
                   <p className="text-sm text-muted-foreground">
-                    Decode a sequence of mystical symbols representing numbers.
-                    Each symbol corresponds to a specific digit in our sacred numerical system.
-                    Success reveals the first key fragment.
+                    Navigate through the neon-lit streets of our spiritual center.
+                    Decode the coordinates that led to where it all began.
                   </p>
                 </div>
                 
                 <div className="bg-white/5 p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">2. The Riddle Trial</h4>
+                  <h4 className="font-medium mb-2">2. The Car Enthusiast's Quest</h4>
                   <p className="text-sm text-muted-foreground">
-                    Solve an ancient riddle using wisdom and intuition.
-                    Your answer, when correct, will unveil the second key fragment.
+                    Uncover the sacred grounds where JDM dreams come true.
+                    Follow the trail of orange signs to automotive paradise.
                   </p>
                 </div>
                 
                 <div className="bg-white/5 p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">3. The Final Trial</h4>
+                  <h4 className="font-medium mb-2">3. Island Paradise</h4>
                   <p className="text-sm text-muted-foreground">
-                    Decode one final message related to our blockchain realm.
-                    This will reveal the last key fragment needed to access the treasure.
+                    Return to the crystal waters where five kayaks carved memories.
+                    Decode the coordinates to our island sanctuary.
                   </p>
                 </div>
               </div>
+            </section>
+
+            <section>
+              <h3 className="text-lg font-serif mb-2">Memory Markers</h3>
+              <p className="text-muted-foreground mb-4">
+                Each cipher contains references that only Divine members would understand.
+                Use our shared experiences to guide you through the challenges.
+              </p>
             </section>
 
             <section>
               <h3 className="text-lg font-serif mb-2">Divine Guidance</h3>
-              <p className="text-muted-foreground mb-4">
-                If you find yourself stuck, you may seek divine guidance through hints.
-                Each trial offers three hints to help illuminate your path.
-              </p>
-            </section>
-
-            <section>
-              <h3 className="text-lg font-serif mb-2">The Sacred Key</h3>
-              <p className="text-muted-foreground mb-4">
-                As you complete each trial, you'll receive a fragment of the sacred key.
-                All three fragments combined will reveal the path to the Solana wallet
-                containing the treasure prepared for our chosen DIVINE member.
-              </p>
-              <div className="bg-white/5 p-4 rounded-lg">
-                <p className="text-sm text-center">
-                  Complete all trials to unlock the treasure
-                </p>
-              </div>
-            </section>
-
-            <section>
-              <h3 className="text-lg font-serif mb-2">Begin Your Quest</h3>
               <p className="text-muted-foreground">
-                Click "Begin Quest" to start your journey through the Divine Secret Santa trials.
-                May wisdom guide your path to the treasure.
+                If you find yourself lost in memories, hints are available to light your path.
+                Each hint draws from our actual adventures and inside jokes.
               </p>
             </section>
           </div>

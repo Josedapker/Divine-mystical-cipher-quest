@@ -1,54 +1,60 @@
-export const DIVINE_CIPHER_MAP = {
-  'A': '◈', 'B': '◇', 'C': '○', 'D': '□', 'E': '△',
-  'F': '▽', 'G': '☆', 'H': '◎', 'I': '◉', 'J': '◍',
-  'K': '◐', 'L': '◑', 'M': '◒', 'N': '◓', 'O': '◔',
-  'P': '◕', 'Q': '⚉', 'R': '⚇', 'S': '⚆', 'T': '⚈',
-  'U': '✧', 'V': '✦', 'W': '❖', 'X': '✵', 'Y': '❈',
-  'Z': '✴', ' ': '⟡', '.': '⟢', ',': '⟣', '!': '⟤',
-  '?': '⟥', '0': '⎔', '1': '⎊', '2': '⎈', '3': '⎇',
-  '4': '⌬', '5': '⌭', '6': '⌮', '7': '⌯', '8': '⌰',
-  '9': '⌱'
-};
-
-export const REVERSE_CIPHER_MAP = Object.fromEntries(
-  Object.entries(DIVINE_CIPHER_MAP).map(([k, v]) => [v, k])
-);
-
 export const GAME_LEVELS = [
   {
     id: 1,
-    hint: "First test: Decode this message to prove your worth",
-    encodedMessage: "⎊⎈⎇⌬⌭⌮⌯⌰⌱⎔",
-    solution: "1234567890",
-    reward: "First part of the key: jqTnERPoRvZR",
+    title: "Divine Journey",
+    description: "Decode the coordinates of our spiritual center where Divine's Tokyo adventure began.",
+    challenge: `Seeking neon dreams: 35.6895° N
+Harmony found in chaos
+Into the night we venture
+Nightly feasts await: 139.6917° E
+Journey through concrete forests
+Understanding dawns in translation
+Knowing this place changes you
+Unity in urban adventure`,
+    solution: "SHINJUKU",
     hints: [
-      "Look at the pattern of symbols carefully",
-      "Each symbol represents a single digit",
-      "The sequence starts with ⎊ which represents 1"
-    ]
+      "Look for numbers with degree symbols",
+      "Where Divine found its Tokyo soul",
+      "The place that changed perspectives"
+    ],
+    reward: "35.6895° N, 139.6917° E"
   },
   {
     id: 2,
-    hint: "Second test: What has keys but no locks, space but no room, and you can enter but not go in?",
-    encodedMessage: "◐△❈◇◔◈⚇□",
-    solution: "KEYBOARD",
-    reward: "Second part of the key: 5T6BiPF1QyChub5fh3U7g8uWeDMENabtvuYDje3hAR3xpaCsTpNQjX6hSYUNM",
+    title: "The Car Enthusiast's Quest",
+    description: "Uncover the sacred grounds where JDM dreams come true.",
+    challenge: `Automotive dreams unfold here
+Under neon signs we browse
+Through aisles of JDM parts
+Overseas treasures abound
+Beneath Tokyo's glow
+Answers to our mods await
+Calling all car enthusiasts
+Sanctuary of speed found`,
+    solution: "AUTOBACS",
     hints: [
-      "It's something you use every day",
-      "You're using it right now to solve this puzzle",
-      "Type your answer on it"
-    ]
+      "First letter of each line holds the key",
+      "Famous orange-signed parts store in Japan",
+      "Where JDM dreams come true"
+    ],
+    reward: "The Temple of Speed"
   },
   {
     id: 3,
-    hint: "Final test: Decode this wallet address",
-    encodedMessage: "⚆◔◑◈◓◈",
-    solution: "SOLANA",
-    reward: "Final part of the key: 13mZ1f76VcanJm",
+    title: "Island Code",
+    description: "Navigate to paradise where five kayaks explored azure waters.",
+    challenge: `First light breaks: 11.1800° N
+Remember five kayaks against tide
+Islands whisper secrets: 119.3830° E
+Each wave marks time's flow
+Navigating limestone dreams
+Destiny written in azure skies`,
+    solution: "ELNIDO",
     hints: [
-      "It's the name of a blockchain",
-      "This treasure hunt runs on it",
-      "SOL is its native token"
-    ]
+      "Paradise coordinates hidden in verse",
+      "Where island hopping dreams came true",
+      "Five kayaks tell a story"
+    ],
+    reward: "11.1800° N, 119.3830° E"
   }
 ];

@@ -8,21 +8,25 @@ import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<IntroSequence />} />
-          <Route path="/intro" element={<IntroSequence />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={hasSeenIntro ? <Navigate to="/home" /> : <IntroSequence />} />
+            <Route path="/intro" element={<IntroSequence />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
