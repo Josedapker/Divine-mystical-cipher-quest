@@ -40,11 +40,9 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
 
   const handleNextStep = () => {
     if (currentStep >= introMessages.length - 1) {
-      // When we've shown all messages, navigate to home
       sessionStorage.setItem('hasSeenIntro', 'true');
       navigate('/home');
     } else {
-      // Otherwise, move to next message
       setCurrentStep(prev => prev + 1);
     }
   };
@@ -62,14 +60,46 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
           animate={{ opacity: 1, y: 0 }}
           className="text-center space-y-8"
         >
-          <h1 className="text-4xl md:text-6xl font-serif mb-4">Divine Group Chat Ciphers</h1>
-          <p className="text-xl text-white/80">A journey through our shared memories and adventures</p>
-          <motion.button
-            onClick={handleNextStep}
-            className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
-          >
-            Begin the Sacred Journey
-          </motion.button>
+          <div className="space-y-2">
+            <h1 className="text-6xl md:text-8xl font-serif mb-2">DIVINE</h1>
+            <p className="text-2xl text-white/80 font-light mb-2">ディバイン</p>
+            <h2 className="text-3xl font-serif text-white/90">Secret Santa Cipher</h2>
+            <p className="text-xl text-white/70 mt-4">A Mystical Quest for Treasure</p>
+            <div className="flex justify-center space-x-2 text-white/60 text-lg mt-4">
+              <span>Decode</span>
+              <span>•</span>
+              <span>Discover</span>
+              <span>•</span>
+              <span>Unlock</span>
+            </div>
+          </div>
+
+          <div className="text-white/40 text-lg space-x-2">
+            <span>Divine Trials</span>
+            <span>•</span>
+            <span>Sacred Keys</span>
+            <span>•</span>
+            <span>Hidden Treasure</span>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <motion.button
+              onClick={handleNextStep}
+              className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/90 text-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Begin Quest
+            </motion.button>
+            <motion.button
+              onClick={() => navigate('/guide')}
+              className="px-8 py-3 bg-transparent hover:bg-white/5 text-white/70 rounded-lg border border-white/20 transition-colors text-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View Cipher Guide
+            </motion.button>
+          </div>
         </motion.div>
       )}
 
