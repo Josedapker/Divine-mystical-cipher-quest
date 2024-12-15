@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { CipherLevel } from './CipherLevel';
 import { AICipherAssistant } from './AICipherAssistant';
+import { KeyCombiner } from './KeyCombiner';
 
 const DIVINE_CIPHER_MAP: { [key: string]: string } = {
   'A': '◈', 'B': '◇', 'C': '○', 'D': '□', 'E': '△',
@@ -152,6 +153,8 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
     fetchWalletBalance();
   }, []);
 
+  const isAllTrialsComplete = solvedLevels.length === GAME_LEVELS.length;
+
   return (
     <div className="min-h-screen bg-black text-white p-8">
       <AnimatePresence mode="wait">
@@ -241,6 +244,11 @@ export const CipherExperiment: React.FC<CipherExperimentProps> = ({ onBack }) =>
                 revealedKey={revealedKeys[index]}
               />
             ))}
+
+            <KeyCombiner 
+              revealedKeys={revealedKeys}
+              isComplete={isAllTrialsComplete}
+            />
 
             {message && (
               <motion.div
