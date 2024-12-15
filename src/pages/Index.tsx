@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CipherExperiment } from '../components/CipherExperiment';
-import { CipherGuide } from '../components/CipherGuide';
+import CipherGuide from '../components/CipherGuide';
 
 const Index = () => {
   const [gameStarted, setGameStarted] = useState(false);
