@@ -34,6 +34,7 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
     setIsLoading(true);
 
     try {
+      console.log('Sending message to Claude...');
       const { data, error } = await supabase.functions.invoke('claude-chat', {
         body: {
           messages: [
@@ -42,7 +43,8 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
               content: `You are a mystical guide helping users solve cipher puzzles in a Secret Santa game. 
                 Current puzzle level: ${currentLevel}
                 Current hint: ${currentHint}
-                Be encouraging and give subtle hints rather than direct answers.`
+                Be encouraging and give subtle hints rather than direct answers.
+                Keep your responses concise and magical in tone.`
             },
             ...messages.map(msg => ({
               role: msg.role,
@@ -53,8 +55,16 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
         }
       });
 
-      if (error) throw error;
-      if (!data?.response) throw new Error('No response from Claude');
+      console.log('Claude response:', data);
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      if (!data?.response) {
+        throw new Error('No response received from Claude');
+      }
 
       setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
       toast({
@@ -65,7 +75,7 @@ export const AICipherAssistant: React.FC<AICipherAssistantProps> = ({
       console.error('Error calling Claude:', error);
       toast({
         title: "Error",
-        description: "Failed to get response from the Divine Guide",
+        description: "Failed to get response from the Divine Guide. Please try again.",
         variant: "destructive",
       });
     } finally {
