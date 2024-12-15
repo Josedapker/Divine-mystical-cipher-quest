@@ -10,82 +10,78 @@ const Index = () => {
   }
 
   return (
-    <div className="mystical-bg min-h-screen flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent pointer-events-none" />
+      
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center max-w-3xl mx-auto"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2 }}
+        className="text-center z-10"
       >
-        <h1 className="text-4xl md:text-6xl font-serif font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-divine-gold to-divine-purple">
-          Divine Secret Santa
-        </h1>
-        
-        <div className="animate-float mb-8 text-2xl space-x-2">
-          {['◈', '◇', '○', '□', '△'].map((symbol, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: i * 0.1 }}
-              className="inline-block text-divine-purple"
-            >
-              {symbol}
-            </motion.span>
-          ))}
-        </div>
-
-        <p className="text-lg md:text-xl mb-8 text-white/80 leading-relaxed">
-          Embark on a mystical journey to unlock the sacred holiday cipher.
-          Decode ancient symbols, reveal hidden messages, and discover the
-          true spirit of giving within the Divine realm.
-        </p>
-
-        <motion.button
-          onClick={() => setGameStarted(true)}
-          className="px-8 py-4 bg-gradient-to-r from-divine-purple to-divine-gold 
-                     text-white rounded-lg font-medium text-lg shadow-lg 
-                     hover:shadow-divine-purple/50 transition-all duration-300
-                     hover:scale-105"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-6xl md:text-8xl font-serif text-white mb-2"
         >
-          Enter the Divine Realm
-        </motion.button>
+          DIVINE
+        </motion.h1>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              symbol: "◈",
-              title: "Sacred Ciphers",
-              description: "Decode mystical messages using divine symbols"
-            },
-            {
-              symbol: "○",
-              title: "Holiday Magic",
-              description: "Experience the joy of giving in a magical way"
-            },
-            {
-              symbol: "△",
-              title: "Divine Rewards",
-              description: "Unlock special treasures as you progress"
-            }
-          ].map((feature, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.1 }}
-              className="divine-gradient p-6 rounded-lg backdrop-blur-sm"
-            >
-              <div className="text-3xl text-divine-gold mb-4 animate-glow">
-                {feature.symbol}
-              </div>
-              <h3 className="text-xl font-serif mb-2">{feature.title}</h3>
-              <p className="text-white/70">{feature.description}</p>
-            </motion.div>
-          ))}
-        </div>
+        <motion.h2
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="text-xl md:text-2xl text-white/60 font-light mb-8 tracking-[0.2em]"
+        >
+          神聖な
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+          className="max-w-xl mx-auto mb-12"
+        >
+          <h3 className="text-xl md:text-2xl text-white/80 font-light mb-6">
+            Agent Swarm Intelligence
+          </h3>
+          <p className="text-white/60 text-sm md:text-base mb-8">
+            Automated Trading • Market Analysis • Prediction Markets
+          </p>
+          <div className="text-white/40 text-sm space-y-1">
+            <p>Divine Oracle • Divine Sentinel • Divine Prophet</p>
+            <p>Divine Trader • Divine Pulse</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="flex gap-4 justify-center"
+        >
+          <motion.button
+            onClick={() => setGameStarted(true)}
+            className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white/90 rounded-full 
+                     border border-white/20 transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Request Access
+          </motion.button>
+          
+          <motion.button
+            onClick={() => setGameStarted(true)}
+            className="px-6 py-2 bg-transparent hover:bg-white/5 text-white/70 rounded-full 
+                     border border-white/10 transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            View Experiments
+          </motion.button>
+        </motion.div>
       </motion.div>
     </div>
   );

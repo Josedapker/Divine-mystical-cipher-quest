@@ -19,12 +19,8 @@ export default {
     },
     extend: {
       colors: {
-        divine: {
-          gold: "#FFD700",
-          purple: "#9B6DFF",
-          red: "#FF3D3D",
-        },
-        background: "#0A0A0F",
+        background: "#000000",
+        foreground: "#FFFFFF",
       },
       fontFamily: {
         serif: ["Cinzel", "serif"],
