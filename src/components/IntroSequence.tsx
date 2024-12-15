@@ -16,7 +16,7 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({
   const [currentStep, setCurrentStep] = useState(initialStep);
 
   const handleNextStep = () => {
-    if (currentStep >= introMessages.length) {
+    if (currentStep >= introMessages.length - 1) {
       // When we've shown all messages, navigate to home
       sessionStorage.setItem('hasSeenIntro', 'true');
       navigate('/home');
